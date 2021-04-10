@@ -11,8 +11,12 @@ export class ItemService {
   private baseUrl = 'http://localhost:8080/api/items';
   constructor(private httpClient : HttpClient) { }
 
-  getItemList(): Observable<Item[]> {
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+  getItemList(categoryId: number): Observable<Item[]> {
+
+    // @TODO: need to build URL based on category id
+    const searchUrl =  `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
+
+    return this.httpClient.get<GetResponse>(searchUrl).pipe(
       map(response => response._embedded.items)
     )
   }
